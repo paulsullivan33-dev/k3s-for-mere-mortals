@@ -1,0 +1,15 @@
+The honest edge of client-side work: commands that read a
+manifest FILE ask the cluster's API what the kinds in the file
+mean, even for a dry run. With no cluster running, they fail
+like this. (hello.yaml is k3s-lab/manifests/hello.yaml.)
+
+$ k3s kubectl create -f hello.yaml --dry-run=client -o yaml
+error: error validating "hello.yaml": error validating data: failed to download openapi: Get "http://localhost:8080/openapi/v2?timeout=32s": dial tcp [::1]:8080: connect: connection refused; if you choose to ignore these errors, turn validation off with --validate=false
+
+$ k3s kubectl apply -f hello.yaml --dry-run=client --validate=false
+E1028 02:46:41.103923   70436 memcache.go:381] "Couldn't get current server API group list" err="Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"
+unable to recognize "hello.yaml": Get "http://localhost:8080/api?timeout=32s": dial tcp [::1]:8080: connect: connection refused
+
+localhost:8080 is where kubectl looks for a cluster when it
+has no kubeconfig — the refusal is kubectl saying "there is
+no cluster here", not a fault in the manifest.

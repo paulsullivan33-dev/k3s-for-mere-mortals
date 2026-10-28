@@ -1,0 +1,29 @@
+$ k3s --help
+NAME:
+   k3s - Kubernetes, but small and simple
+
+USAGE:
+   k3s [global options] command [command options]
+
+VERSION:
+   v1.37.1+k3s1 (356c0254)
+
+COMMANDS:
+   server           Run management server
+   agent            Run node agent
+   kubectl          Run kubectl
+   crictl           Run crictl
+   ctr              Run ctr
+   check-config     Run config check
+   token            Manage tokens
+   etcd-snapshot    Manage etcd snapshots
+   secrets-encrypt  Control secrets encryption and keys rotation
+   certificate      Manage K3s certificates
+   completion       Install shell completion script
+   help, h          Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --debug                     (logging) Turn on debug logs (default: false) [$K3S_DEBUG]
+   --data-dir value, -d value  (data) Folder to hold state default /var/lib/rancher/k3s or ${HOME}/.rancher/k3s if not root [$K3S_DATA_DIR]
+   --help, -h                  show help
+   --version, -v               print the version

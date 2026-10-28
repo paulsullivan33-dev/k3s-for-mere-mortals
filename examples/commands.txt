@@ -1,0 +1,68 @@
+K3s for Mere Mortals — the commands, in chapter order.
+Cluster-running commands are the project's documented ones;
+the lab-verified client-side commands are marked (lab).
+
+Chapter 3 — Installing
+  curl -sfL https://get.k3s.io | sh -
+  curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.37.1+k3s1 sh -
+  sha256sum k3s                                  (lab)
+  k3s --version                                  (lab)
+  k3s check-config                               (lab)
+
+Chapter 4 — Your first cluster
+  sudo k3s server
+  sudo systemctl status k3s
+  sudo journalctl -u k3s -f
+  export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+  k3s kubectl get nodes
+  k3s kubectl get pods -A
+  k3s kubectl cluster-info
+
+Chapter 5 — The bundled tools
+  k3s kubectl version --client                   (lab)
+  k3s kubectl create deployment hello --image=nginx:alpine --replicas=2 --dry-run=client -o yaml   (lab)
+  k3s kubectl create service loadbalancer hello --tcp=8080:80 --dry-run=client -o yaml              (lab)
+  k3s token generate                             (lab)
+  k3s ctr images list
+  k3s crictl ps
+
+Chapter 6 — Running a workload
+  k3s kubectl create deployment hello --image=nginx:alpine --replicas=2
+  k3s kubectl get pods --watch
+  k3s kubectl create service loadbalancer hello --tcp=8080:80
+  k3s kubectl get service hello
+  k3s kubectl scale deployment hello --replicas=4
+  k3s kubectl set image deployment hello nginx=nginx:1.27-alpine
+  k3s kubectl rollout status deployment hello
+  k3s kubectl delete service hello
+  k3s kubectl delete deployment hello
+
+Chapter 7 — Manifests and auto-deploy
+  k3s kubectl apply -f hello.yaml
+  k3s kubectl get all
+  k3s kubectl delete -f hello.yaml
+  ls /var/lib/rancher/k3s/server/manifests/
+
+Chapter 10 — Adding nodes
+  sudo cat /var/lib/rancher/k3s/server/node-token
+  curl -sfL https://get.k3s.io | K3S_URL=https://<server>:6443 K3S_TOKEN=<the token> sh -
+  k3s kubectl get nodes
+  k3s kubectl drain <node>
+  k3s kubectl delete node <node>
+
+Chapter 12 — Upgrades, backups and removal
+  curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.37.1+k3s1 sh -
+  k3s etcd-snapshot save
+  k3s etcd-snapshot list
+  k3s secrets-encrypt enable
+  k3s secrets-encrypt status
+  /usr/local/bin/k3s-uninstall.sh
+  /usr/local/bin/k3s-agent-uninstall.sh
+
+Chapter 16 — Troubleshooting
+  journalctl -u k3s
+  k3s check-config                               (lab)
+  k3s kubectl describe node <name>
+  k3s kubectl describe pod <name>
+  k3s kubectl logs <name> --previous
+  k3s kubectl top nodes

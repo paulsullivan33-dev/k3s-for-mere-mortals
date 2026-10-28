@@ -1,0 +1,23 @@
+Two small behaviours, both run for real against the lab
+binary. Neither needs a running cluster.
+
+1. The config file is read at startup, and a misspelt key is
+   a warning, not a stop. With /etc/rancher/k3s/config.yaml
+   containing one good key and one invented one:
+
+$ cat /etc/rancher/k3s/config.yaml
+write-kubeconfig-mode: "644"
+no-such-setting: true
+
+$ k3s server --data-dir ./data-cfgtest
+time="2026-10-28T02:50:24Z" level=warning msg="Unknown flag --no-such-setting found in config.yaml, skipping\n"
+... (startup continued; in the lab sandbox it then met the
+cgroup wall described in t05 — on an ordinary machine it
+would have carried on starting)
+
+2. A join token can be minted without a server — the same
+   subcommand also has create, list, delete and rotate,
+   which do need one:
+
+$ k3s token generate
+7cx9eb.u71f7j8cojx5pwtx

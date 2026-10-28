@@ -1,0 +1,30 @@
+site_name: K3s for Mere Mortals
+site_description: Kubernetes in a single small binary. Installing K3s on one ordinary machine, growing it into a small cluster of your own, running real workloads on it, and knowing plainly what the light weight leaves out.
+site_url: https://paulsullivan33-dev.github.io/k3s-for-mere-mortals/
+copyright: 'Part of <a href="https://paulsullivan33-dev.github.io/mere-mortals/">For Mere Mortals</a> · Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code MIT'
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What K3s Is: what-k3s-is.md
+  - The Moving Parts: the-moving-parts.md
+  - Installing K3s: installing-k3s.md
+  - Your First Cluster: your-first-cluster.md
+  - The Bundled Tools: the-bundled-tools.md
+  - Running a Workload: running-a-workload.md
+  - Manifests and Auto-Deploy: manifests-and-auto-deploy.md
+  - Ingress and Load Balancers: ingress-and-services.md
+  - Storage: storage.md
+  - Adding Nodes: adding-nodes.md
+  - Configuration: configuration.md
+  - Upgrades, Backups and Removal: upgrades-backups-and-removal.md
+  - Recipes: recipes.md
+  - The Neighbours: the-neighbours.md
+  - Limits: limits.md
+  - Troubleshooting: troubleshooting.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md

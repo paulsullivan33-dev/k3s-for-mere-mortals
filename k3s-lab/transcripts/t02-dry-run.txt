@@ -1,0 +1,45 @@
+Client-side dry runs: kubectl builds the manifest locally and
+prints it. No cluster is contacted, and nothing is created.
+
+$ k3s kubectl create deployment hello --image=nginx:alpine --replicas=2 --dry-run=client -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello
+  name: hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        resources: {}
+status: {}
+
+$ k3s kubectl create service loadbalancer hello --tcp=8080:80 --dry-run=client -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hello
+  name: hello
+spec:
+  ports:
+  - name: 8080-80
+    port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: hello
+  type: LoadBalancer
+status:
+  loadBalancer: {}
